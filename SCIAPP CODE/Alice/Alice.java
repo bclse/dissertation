@@ -7,9 +7,7 @@ import java.nio.charset.StandardCharsets;
 public class Alice {
 
     String Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJwYXJ0aWNpcGFudDIiLCJhcHBsaWNhdGlvbklkIjoiZm9vYmFyIiwiYWN0QXMiOlsiYWxpY2U6OjEyMjBjZTFkZmFhNjNiMDI3ZTFmNmNlZmI2NmM2OTkzMjM0ZmIzOGI5MDVmOGY0NmE0OGIyMzMwZmRmNWI5YjQxM2I3Il19fQ.PvepGOEUuDz0lVsh0t_Zqs-a0tNZdIwuyPji6h9UfOWC_BweTHgYtiHjNnaS0REEVnsfcqxvQVIqG-kcF_JTIqtAtAZwE3F-zOHmgrzaRW_CJiSe2xAe_kqE9UVWra1cWWOI3SL4e1gcEvxfELtLHe6VeaIYvRhR4aZV-n7-1q3E-MfAXuEsZKFdtaEfbuiJB03DIQlJTR4mOUSflC6HTQdJdB7Ki9ByzJULbmQIiI0AVRqCHAKI_cpRA1wTSBdhC_7y240TYQDKZgBud2FNZq33x_n9hWNlvcxw3FJQKrfl5nmTmm05v_LkiIVZbPnwgO19abX4Vjol3k8gTdrz1w";
-    String partyAlice = "alice::1220c5e9e3f2b736b83853bb20bd567a6be777bb3c6a3930042888802042a45f11c6";
-    //String partyBob = "bob::122033f10bca62fab35e0d8c3abee47abc23b78c8d91c90841ad7d4956c984eefecc";
-    String Token_noAUT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2RhbWwuY29tL2xlZGdlci1hcGkiOnsibGVkZ2VySWQiOiJwYXJ0aWNpcGFudDIiLCJhcHBsaWNhdGlvbklkIjoiZm9vYmFyIiwiYWN0QXMiOlsiYWxpY2U6OjEyMjBjNWU5ZTNmMmI3MzZiODM4NTNiYjIwYmQ1NjdhNmJlNzc3YmIzYzZhMzkzMDA0Mjg4ODgwMjA0MmE0NWYxMWM2Il19fQ.basJbtk6WqomZV1iPzV1UEY8wmfwvP5mshgzoAR_ELg";
+    String partyAlice = "alice::1220ce1dfaa63b027e1f6cefb66c6993234fb38b905f8f46a48b2330fdf5b9b413b7";
     static HttpURLConnection con;
     static HttpURLConnection con_exercise;
     static HttpURLConnection post;
@@ -41,7 +39,7 @@ public class Alice {
         out = input.getBytes(StandardCharsets.UTF_8);
         int length = out.length;
         con.setFixedLengthStreamingMode(length);
-        con.setAuthenticationProperty("Authorization", "Bearer " + Token_noAUT);
+        con.setAuthenticationProperty("Authorization", "Bearer " + Token);
         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         con.connect();
 
@@ -127,7 +125,7 @@ public class Alice {
         out_exercise = input.getBytes(StandardCharsets.UTF_8);
         int length = out_exercise.length;
         con_exercise.setFixedLengthStreamingMode(length);
-        con_exercise.setAuthenticationProperty("Authorization", "Bearer " + Token_noAUT);
+        con_exercise.setAuthenticationProperty("Authorization", "Bearer " + Token);
         con_exercise.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         con_exercise.connect();
 
@@ -162,32 +160,6 @@ public class Alice {
             os.write(out);
         }
         System.out.println("Update item: " + item + " State: " + input);
-    }
-
-    void post(String input, String item) throws IOException {
-        //************** meter no URL o item escolhido******************///////
-        URL url = new URL("http://localhost:8080/rest/items/" + item ); //URL
-
-        try {
-            post = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        post.setRequestMethod("POST");
-        post.setDoOutput(true);
-
-        byte [] out = input.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-
-        post.setFixedLengthStreamingMode(length);
-        post.setAuthenticationProperty("Accept", "application/json" );
-        post.setRequestProperty("Content-Type", "text/plain; charset=UTF-8");
-        post.connect();
-
-        try(OutputStream os = post.getOutputStream()) {
-            os.write(out);
-        }
-        System.out.println("Post to OpenHAB the Current State:" + input + " of Item: " + item );
     }
 
     public void setPayload() {

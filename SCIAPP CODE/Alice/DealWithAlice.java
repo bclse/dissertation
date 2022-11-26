@@ -8,7 +8,7 @@ public class DealWithAlice extends Thread {
 
     Alice alice;
     DamlLedgerClient client;
-    String ledgerHost = "192.168.173.139";
+    String ledgerHost = "192.168.61.132";
     int ledgerPort = 5011;
     boolean aux = true;
     boolean aux1 = true;
@@ -19,7 +19,7 @@ public class DealWithAlice extends Thread {
             startLedgerClient();
             try {
                 runIndefinitely();
-                Thread.currentThread().join(); //Thread da alice espera que thread deal with alice termine
+                Thread.currentThread().join(); 
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -31,8 +31,7 @@ public class DealWithAlice extends Thread {
 
     public void startLedgerClient() {
         client = DamlLedgerClient.newBuilder(ledgerHost, ledgerPort)
-                //.withSslContext(GrpcSslContexts.forClient().build())
-                .withAccessToken("Authorization: " + "Bearer " + alice.Token_noAUT)
+                .withAccessToken("Authorization: " + "Bearer " + alice.Token)
                 .build();
 
         client.connect();
@@ -42,17 +41,8 @@ public class DealWithAlice extends Thread {
 
         Flowable<Transaction> transactions = client.getTransactionsClient().getTransactions(LedgerOffset.LedgerEnd.getInstance(),
                 new FiltersByParty(Collections.singletonMap(alice.partyAlice, NoFilter.instance)), true);
-        //transactions.forEach(this::process);
         transactions.forEach(this::processTransaction);
-        //System.out.println(transactions.blockingNext());
-        //System.out.println(System.currentTimeMillis());
-
     }
-
-    private void process(Transaction transaction) {
-        System.out.println(System.currentTimeMillis());
-    }
-
 
     private void processTransaction(Transaction transaction) throws IOException {
         System.out.println("ALICE API QUERY: " + System.currentTimeMillis() + " " + java.time.LocalDateTime.now());
