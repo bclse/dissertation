@@ -17,7 +17,7 @@ public class Alice {
     static String payload = "";
     static byte [] out;
     static byte [] out_exercise;
-    static BufferedReader reader = null;
+    static BufferedReader reader = null ;
     static String ContractId;
     String oldState;
 

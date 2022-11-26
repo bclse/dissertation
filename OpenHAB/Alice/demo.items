@@ -1,0 +1,48 @@
+/********************** BUILDING *************/
+/* THIRD FLOOR */
+
+
+/* SECOND FLOOR */
+
+
+/* First Floor */
+    /* CONFERENCE ROOM */
+Switch FF_CF_CONTROL
+Switch FF_CF_LIGHT
+Number FF_CF_TEMP 
+
+    /* OFFICE */
+Switch FF_OF_LIGHT 
+
+    /* AUDITORIUM */
+Number FF_AU_PROJECTOR 
+Switch FF_AU_LIGHT 
+
+    /* Lounge Room */
+Switch FF_LR_LIGHT 
+
+
+    /* WC */
+Switch FF_WC_LIGHT 
+
+
+    /* HALL */
+Switch FF_HL_LIGHT 
+
+/* GROUND FLOOR */
+
+
+/* GARAGE */
+
+/***************** CONTROLS **********************/
+Contact CONTROL_STATE "Control State  [MAP(en.map):%s]" <wallswitch> { autoupdate="true" }
+Switch CONTROL_LIGHT { autoupdate="true" }
+String CONTROL_TEXT { autoupdate="true" }
+
+Contact CONTROL_STATE2 "Control State  [MAP(en.map):%s]" <wallswitch> { autoupdate="true" }
+Rollershutter CONTROL_SHUTTER { autoupdate="true" }
+String CONTROL_TEXT2 { autoupdate="true" }
+ 
+Contact CONTROL_STATE3 "Control State  [MAP(en.map):%s]" <wallswitch> { autoupdate="true" }
+Number CONTROL_LIGHT3 { autoupdate="true" }
+String CONTROL_TEXT3 { autoupdate="true" }

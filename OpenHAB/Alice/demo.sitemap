@@ -1,0 +1,73 @@
+sitemap BuildingSitemap label="Building Sitemap" {
+    Frame icon="group" label="Building" {
+        Text icon="attic" label="Third Floor" {
+            Text icon="line" label="Main Conference Room"
+            Text icon="suitcase" label="CEO's Office"
+            Text icon="suitcase" label="Office N"
+            Text icon="sofa" label="Lounge Room"
+            Text icon="corridor" label="Hall"
+            Text icon="toilet" label="WC"
+        }
+        Text icon="firstfloor" label="Second Floor" {
+            Text icon="line" label="Conference Room N"
+            Text icon="line" label="Conference Room S"
+            Text icon="suitcase" label="Office E"
+            Text icon="suitcase" label="Office W"
+            Text icon="corridor" label="Hall"
+            Text icon="toilet" label="WC"
+        }
+        Text icon="groundfloor" label="First Floor" {
+            Text icon="line" label="Conference Room" {
+                Switch icon="wallswitch" item=FF_CF_CONTROL label="Control the Lights"
+                Switch icon="light" item=FF_CF_LIGHT label="Lights"
+                Text icon="Temperature" item=FF_CF_TEMP label="Temperature [%.1f °C]"
+            }
+            Text icon="suitcase" label="Office" {
+                Switch icon="light" item=FF_OF_LIGHT label="Lights"
+            }
+            Text icon="cinemascreen" label="Auditorium" {
+                Selection icon="projector" item=FF_AU_PROJETOR label="Projector" mappings=[Presentation1="Presentation 1",Presentation2="Presentation 2",Presentation3="Presentation 3",Presentation4="Presentation 4"]
+                Switch icon="lightbulb" item=FF_AU_LIGHT label="Lights"
+            }
+            Text icon="sofa" label="Lounge Room" {
+                Switch icon="colorlight" item=FF_LR_LIGHT label="Lights"
+            }
+            Text icon="toilet" label="WC" {
+                Switch icon="lightbulb" item=FF_WC_LIGHT label="Lights"
+            }
+            Text icon="corridor" label="Hall" {
+                Switch icon="light" item=FF_HL_LIGHT label="Lights"
+            }
+        }
+        Text icon="cellar" label="Ground Floor" {
+            Text icon="corridor" label="Hall"
+            Text icon="kitchen" label="Cafeteria"
+            Text icon="toilet" label="WC"
+            Text icon="shield" label="Doorman Desk"
+        }
+        Text icon="garage" label="Garage" {
+            Text icon="garage_detached_selected" label="Parking Lot 1"
+            Text icon="garage_detached_selected" label="Parking Lot 2"
+            Text icon="garage_detached_selected" label="Parking Lot 3"
+            Text icon="garage_detached_selected" label="Parking Lot 4"
+        }
+    }
+    
+   Frame icon="group" label="Control Panel" {
+       // Default item=CONTROL_STATE       
+        Text icon="lock" item=CONTROL_TEXT label="Light Control (Disable)" visibility=[CONTROL_STATE==CLOSED]      
+        Switch icon="light" item=CONTROL_LIGHT label="Light Control (Enable)" visibility=[CONTROL_STATE==OPEN]
+
+
+       // Default item=CONTROL_STATE2       
+        Text icon="lock" item=CONTROL_TEXT2 label="Roller Shutter Control (Disable)" visibility=[CONTROL_STATE2==CLOSED]      
+        Default icon="blinds" item=CONTROL_SHUTTER label="Roller Shutter Control (Enable)" visibility=[CONTROL_STATE2==OPEN]
+
+       // Default item=CONTROL_STATE3      
+        Text icon="lock" item=CONTROL_TEXT3 label="Light RGB Control (Disable)" visibility=[CONTROL_STATE3==CLOSED]      
+        Selection icon="colorlight" item=CONTROL_LIGHT3 label="Light RGB Control (Enable)" visibility=[CONTROL_STATE3==OPEN] mappings=[Color1="RED",Color2="GREEN",Color3="BLUE",Color4="YELLOW"] 
+
+        
+    }
+       
+}

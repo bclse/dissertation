@@ -1,0 +1,55 @@
+module Lights where
+
+import Daml.Script
+
+type RequestChangeId = ContractId RequestChange
+type ChangeId = ContractId Change
+
+data Place = Room | Living_Room | Hall | Conference_Room
+    deriving(Eq,Show)
+
+data State = ON | OFF
+    deriving(Eq,Show)
+
+-- LEDGER_PARTIES_BEGIN
+data LedgerParties = LedgerParties with
+  bob : Party
+-- LEDGER_PARTIES_END
+
+template RequestChange
+  with
+    asker : Party
+    answerer : Party
+    place : Place
+    currentState : State
+  where
+    signatory asker
+    observer answerer
+ 
+    choice Accept : ChangeId
+      with
+        feedback : Text
+        newState : State 
+      controller answerer 
+      do 
+        assertMsg "A state cannot be changed for equal." (currentState /= newState)
+        create Change with ..
+
+template Change
+  with
+    asker : Party
+    answerer : Party
+    place : Place
+    newState : State
+    feedback : Text
+  where
+    signatory asker, answerer
+
+-- INITIALIZE_USER_BEGIN 
+initializeUser : Script LedgerParties
+initializeUser = do 
+  partyBob <- allocatePartyWithHint "bob" (PartyIdHint "bob") 
+  bob <- validateUserId "bob"  
+  _ <- createUser (User bob (Some partyBob)) [CanActAs partyBob]
+  pure (LedgerParties partyBob)
+-- INITIALIZE_USER_END

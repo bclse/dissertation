@@ -1,0 +1,34 @@
+/* THIRD FLOOR */
+
+
+/* SECOND FLOOR */
+
+
+/* First Floor */
+    /* CONFERENCE ROOM */
+Switch FF_CF_CONTROL { autoupdate="true" }
+Switch FF_CF_LIGHT { autoupdate="true" }
+Number FF_CF_TEMP 
+
+    /* OFFICE */
+Switch FF_OF_LIGHT 
+
+    /* AUDITORIUM */
+Number FF_AU_PROJECTOR 
+Switch FF_AU_LIGHT 
+
+    /* Lounge Room */
+Switch FF_LR_LIGHT 
+
+
+    /* WC */
+Switch FF_WC_LIGHT 
+
+
+    /* HALL */
+Switch FF_HL_LIGHT 
+
+/* GROUND FLOOR */
+
+
+/* GARAGE */

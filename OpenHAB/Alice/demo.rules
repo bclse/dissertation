@@ -1,0 +1,40 @@
+var results
+val String currentTime 
+val Number epoch
+var results1
+val String currentTime1
+val Number epoch1
+
+rule "Initialize Contact Items"
+    when
+        System started
+    then
+        postUpdate(CONTROL_STATE, CLOSED)
+        postUpdate(CONTROL_STATE2, CLOSED)
+        postUpdate(CONTROL_STATE3, CLOSED)
+end
+
+rule "Create Timestamp STATE"
+when
+  Item CONTROL_STATE changed
+then 
+    if (CONTROL_STATE.state == OPEN) {
+      epoch1 = now.toInstant.toEpochMilli
+      currentTime1 = String::format( "%1$tY-%1$tm-%1$td-%1$tH:%1$tM:%1$tS:%1$tN", new java.util.Date )  
+      results1 = executeCommandLine(Duration.ofSeconds(30),"/home/kali/Desktop/script_o", currentTime1, epoch1.toString, "OPEN")
+      logInfo("test", "exec result " + results1 + currentTime1 + "   " + epoch1)
+    }
+  
+end
+
+
+rule "Create Timestamp LIGHT"
+when
+  Item CONTROL_LIGHT changed
+then 
+    epoch = now.toInstant.toEpochMilli
+    currentTime = String::format( "%1$tY-%1$tm-%1$td-%1$tH:%1$tM:%1$tS:%1$tN", new java.util.Date )  
+    results = executeCommandLine(Duration.ofSeconds(30),"/home/kali/Desktop/script", currentTime, epoch.toString)
+    logInfo("test", "exec result " + results + currentTime + "   " + epoch)
+end
+ 

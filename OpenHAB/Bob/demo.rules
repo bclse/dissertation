@@ -1,0 +1,44 @@
+var results
+val String currentTime 
+val Number epoch
+val String currentTime_update
+val Number epoch_update
+
+rule "100ms"
+    when
+        Item FF_CF_CONTROL changed
+    then
+        Thread::sleep(2500)
+        if(FF_CF_CONTROL.state == OFF){
+            FF_CF_CONTROL.sendCommand(ON)
+        }
+        else {
+            FF_CF_CONTROL.sendCommand(OFF)
+        }
+
+            
+end
+
+rule "Create Timestamp"
+when
+  Item FF_CF_CONTROL changed
+then 
+  epoch = now.toInstant.toEpochMilli
+  currentTime = String::format( "%1$tY-%1$tm-%1$td-%1$tH:%1$tM:%1$tS:%1$tN", new java.util.Date )  
+  if (FF_CF_CONTROL.state == ON) {	
+  	results = executeCommandLine(Duration.ofSeconds(30),"/home/kali/Desktop/script", currentTime, epoch.toString)
+  	logInfo("test", "exec result " + results + currentTime + "   " + epoch)
+   }
+end
+
+
+rule "Create Timestamp Update"
+when
+  Item FF_CF_LIGHT changed
+then 
+  epoch_update = now.toInstant.toEpochMilli
+  currentTime_update = String::format( "%1$tY-%1$tm-%1$td-%1$tH:%1$tM:%1$tS:%1$tN", new java.util.Date )  
+  results = executeCommandLine(Duration.ofSeconds(30),"/home/kali/Desktop/script_update", currentTime_update, epoch_update.toString)
+  logInfo("test", "exec result " + results + currentTime_update, epoch_update.toString)  
+end
+
